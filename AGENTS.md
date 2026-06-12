@@ -141,7 +141,10 @@ documented (the check greps `AGENTS.md` for every `*.yml` basename).
   shape: Conventional Commit title, no merge commits, base is `main`).
 - `project-status-labeled` — mobile-pack server-side board writer: mirrors
   the issue lifecycle onto the Project v2 Status field from label and
-  lifecycle events, reading `PROJECT_NUMBER` from `.github/project.env`.
+  lifecycle events, reading `PROJECT_NUMBER` from `.github/project.env`. It
+  authenticates with the `PROJECTS_TOKEN` repo secret (a PAT with the
+  `project` scope): the default `GITHUB_TOKEN` cannot access a user-owned
+  Project v2 board, so this server-side board writer needs the PAT.
 
 ## Escalation rules
 
