@@ -243,6 +243,14 @@ Return:
 4. Low/polish
 5. Checks run
 6. What this review may have missed
+─────────────────────────────────────────────────────────────
+Before pasting into Codex web:
+1. Ensure your environment has Internet access enabled.
+2. Paste this into the allowlist field (otherwise the reviewer
+   can only scrape GitHub's public UI — no git fetch, no diff):
+
+github.com, raw.githubusercontent.com, api.github.com
+─────────────────────────────────────────────────────────────
 ```
 
 ---

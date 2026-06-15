@@ -157,9 +157,11 @@ jobs:
       - name: Update Project v2 board
         if: steps.project.outputs.number != '' && steps.target.outputs.issue != ''
         env:
-          # PAT with project scope: the default GITHUB_TOKEN cannot access a
-          # user-owned Project v2 board. See PROJECTS_TOKEN repo secret.
-          GH_TOKEN: ${{ secrets.PROJECTS_TOKEN }}
+          # User-owned Project v2 boards are not accessible via the
+          # default GITHUB_TOKEN. Repos using a personal-account board
+          # set a PROJECTS_TOKEN secret (PAT with `project` scope) and
+          # this fallback picks it up automatically — no pack-file edit.
+          GH_TOKEN: ${{ secrets.PROJECTS_TOKEN || secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           NUMBER: ${{ steps.project.outputs.number }}
           ISSUE: ${{ steps.target.outputs.issue }}
