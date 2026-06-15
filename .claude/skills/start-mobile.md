@@ -107,6 +107,13 @@ If any precondition fails, **stop** and tell the human exactly which one.
   label on PR open — re-read the label names once. The board mirrors
   the transition server-side via `project-status-labeled.yml` (it
   reacts to the PR events directly).
+- **Fill the verification slot in the PR body.** `auto-pr.yml` opens
+  the PR with a `## Verification` section containing the placeholder
+  `<!-- start fills here -->`. Read the PR body via `get_pull_request`,
+  substitute the placeholder with the 1–3 line verification summary
+  required by the start contract, and `update_pull_request` with the
+  new body. If the placeholder is absent (older `auto-pr.yml`), append
+  a fresh `## Verification` section with the same summary text.
 - Watch CI via the PR's check results (`get_pull_request_status` or the
   server's check-runs tool — keep check names + conclusions only). If a
   check fails, fix it before tagging a reviewer.
