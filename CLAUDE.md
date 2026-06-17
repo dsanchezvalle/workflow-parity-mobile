@@ -50,13 +50,10 @@ Invoke these via natural language; the harness routes by description.
 | [analyze](.claude/skills/analyze.md)           | Triage an issue, classify E0–E3, post a plan.            |
 | [start](.claude/skills/start.md)               | Begin implementation after plan approval.                |
 | [code-review](.claude/skills/code-review.md)   | Review plan (pre-impl) or code (pre-merge).              |
+| [review-pack](.claude/skills/review-pack.md)   | Build a neutral context packet for an external reviewer. |
 | [deploy-pipeline](.claude/skills/deploy-pipeline.md) | Pre-deploy checklist for this stack.                     |
 | [changelog-reporter](.claude/skills/changelog-reporter.md) | Append a date-based changelog entry on merge to develop. |
 | [verify-sync](.claude/skills/verify-sync.md)   | Verify CLAUDE.md / AGENTS.md ↔ workflows are in sync.    |
-| [analyze-mobile](.claude/skills/analyze-mobile.md) | Mobile (MCP-first) variant of `analyze` — zero `gh`.     |
-| [start-mobile](.claude/skills/start-mobile.md) | Mobile (MCP-first) variant of `start` — zero `gh`.       |
-| [code-review-mobile](.claude/skills/code-review-mobile.md) | Mobile variant of `code-review` with toolchain fail-loud preconditions. |
-| [review-pack](.claude/skills/review-pack.md)   | Build a REVIEW CONTEXT PACKET for an external reviewer (e.g. Codex web). |
 
 ## Project conventions
 
