@@ -1,3 +1,7 @@
+## 2026-06-17
+
+- chore: sync workflow-template to unified pack (remove mobile overlay)
+
 ## 2026-06-14
 
 - feat(homepage): add Get in Touch button linking to mailto (#14)
