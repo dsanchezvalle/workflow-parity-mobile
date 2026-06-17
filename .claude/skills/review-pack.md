@@ -1,7 +1,7 @@
 <!-- CORE: agnostic -->
 ---
 name: review-pack
-description: "Generate a compact, neutral REVIEW CONTEXT PACKET for an external reviewer. Collects GitHub issue and PR metadata (title, body, acceptance criteria, scope, comments, decisions, changed files, checks, risks) via the GitHub MCP server and formats it for pasting into another review tool. Use when the user wants to prepare a PR/issue review packet, share context with an external reviewer (e.g. Codex web), or summarize a GitHub PR and its linked issue. Never modifies files, posts comments, or pushes commits."
+description: "Generate a compact, neutral REVIEW CONTEXT PACKET for an external reviewer. Collects GitHub issue and PR metadata (title, body, acceptance criteria, scope, comments, decisions, changed files, checks, risks) via the GitHub MCP server or the gh CLI (whichever the session has) and formats it for pasting into another review tool. Use when the user wants to prepare a PR/issue review packet, share context with an external reviewer (e.g. Codex web), or summarize a GitHub PR and its linked issue. Never modifies files, posts comments, or pushes commits."
 ---
 
 # review-pack
@@ -10,10 +10,13 @@ Generates a compact, neutral **REVIEW CONTEXT PACKET** from GitHub issue and
 PR metadata. The packet is formatted for pasting into another review tool.
 It never modifies files, posts comments, or pushes commits.
 
-First-class in this pack because the desktop cross-review path (Codex CLI
-on the engineer's machine) is unavailable in mobile sessions: the packet is
-how review context gets handed off to an external reviewer such as Codex
-web.
+First-class and shared across surfaces: this packet is the canonical,
+reviewer-agnostic way to hand review context to **any** external reviewer.
+The pack's own reviewer is the `code-review` skill (Claude); this packet is
+for an additional external pass you run yourself, outside the workflow — the
+pack neither invokes nor depends on a specific external tool. It is the
+primary handoff path in web/mobile sessions (where local cross-review tools
+aren't available) and works on desktop too.
 
 ---
 
@@ -56,16 +59,21 @@ user to supply the repo name.
 
 ## Step 3 — Collect data
 
-### Tooling: GitHub MCP only
+### Tooling: capability detection (GitHub MCP or `gh`)
 
-All GitHub data in this skill comes from the connected GitHub MCP
-server. There is **no `gh` CLI fallback** — this pack guarantees zero
-`gh` calls, and a silent `gh` path would mask exactly the MCP gaps the
-modality's parity test exists to expose. If the MCP server is not
-connected (or a needed tool is missing), **fail loud**: stop and tell
-the user to connect the GitHub MCP integration, naming the data point
-you could not fetch. This applies on desktop sessions too — with MCP
-connected the skill works anywhere; without it, it stops.
+All GitHub data comes from one source, resolved by capability:
+
+- **Web/mobile session** — the connected GitHub MCP server (canonical tool
+  names below: `get_issue`, `get_issue_comments`, `get_pull_request`, …;
+  match by name suffix if the server prefixes them). This is the primary
+  path for this skill.
+- **Desktop session** — the authenticated `gh` CLI returns the same data
+  points (`gh issue view --json`, `gh pr view --json`, `gh pr checks`).
+
+Use whichever the session has; do not mix. If **neither** is available,
+**fail loud**: stop and tell the user to connect the GitHub MCP integration
+or authenticate `gh`, naming the data point you could not fetch. Never fall
+back to scraping the public UI or guessing repo state.
 
 Do not use non-GitHub sources.
 
@@ -244,9 +252,9 @@ Return:
 5. Checks run
 6. What this review may have missed
 ─────────────────────────────────────────────────────────────
-Before pasting into Codex web:
-1. Ensure your environment has Internet access enabled.
-2. Paste this into the allowlist field (otherwise the reviewer
+If your external reviewer runs in a sandboxed cloud env (e.g. Codex web):
+1. Ensure the environment has Internet access enabled.
+2. Paste this into its allowlist field (otherwise the reviewer
    can only scrape GitHub's public UI — no git fetch, no diff):
 
 github.com, raw.githubusercontent.com, api.github.com
