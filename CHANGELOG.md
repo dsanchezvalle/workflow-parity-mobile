@@ -1,3 +1,7 @@
+## 2026-06-18
+
+- feat(homepage): add footer note (#19)
+
 ## 2026-06-17
 
 - chore: sync workflow-template to unified pack (remove mobile overlay)
