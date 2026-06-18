@@ -1,5 +1,14 @@
+## 2026-06-18
+
+- feat(homepage): add footer note (#19)
+
+## 2026-06-17
+
+- chore: sync workflow-template to unified pack (remove mobile overlay)
+
 ## 2026-06-14
 
+- feat(homepage): add Get in Touch button linking to mailto (#14)
 - chore: sync workflow-template pack to v1.10.1 (#86) (#11)
 
 ## 2026-06-12
